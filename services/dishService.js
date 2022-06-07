@@ -13,7 +13,7 @@ const pool = new Pool({
 
 pool.connect(err => {
     if (err) throw new Error('postgreSQL failed connection');
-    console.log('connected to postgreSQL server');
+    console.log('connected to postgreSQL');
 })
 
 
@@ -25,7 +25,6 @@ const getDishes = (request, response) => {
     if (error) {
       throw error
     }
-    console.log('got all dishes');
     response.status(200).json(results.rows)
   })
 }
@@ -71,7 +70,7 @@ const removeDish = (request, response) => {
   const dishId = request.params.id
   pool.query(`DELETE FROM dishes WHERE id = '${dishId}'`, (error, results) => {
     if (error){
-      throw error
+      throw error 
     }
     console.log(results);
     response.status(200).send('dish deleted successfully')
