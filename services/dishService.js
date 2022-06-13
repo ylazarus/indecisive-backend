@@ -45,9 +45,7 @@ const addDish = async (request, response) => {
   const { title, type, onePot, kosherStatus, difficult, quick, time, link } =
     request.body
   let alreadyInDB = 1
-  console.log("before check, already in DB is: ", alreadyInDB)
   alreadyInDB = await _checkIfInDB(title)
-  console.log("already in DB?", alreadyInDB)
   if (alreadyInDB) {
     response.status(500).send("Dish with that title already exists!")
     return
