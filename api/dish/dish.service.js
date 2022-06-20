@@ -16,29 +16,25 @@ pool.connect((err) => {
   console.log("connected to postgreSQL")
 })
 
-const getDishes = async (request, response) => {
+async function query(filterBy) {
   // this app purposely returns a maximum of three results
-  let filterBy = request.query
   const SQLquery = _buildSQLquery(filterBy)
   try {
     const results = await pool.query(SQLquery)
-    response.status(200).json(results.rows)
+    return results.rows
   } catch (error) {
-    response.status(500).send("can not get dishes now", err)
+    response.status(500).send("can not get dishes now", error)
   }
 }
 
-const getDishById = (request, response) => {
-  const dishId = request.params.id
-  pool.query(
-    `SELECT * FROM dishes WHERE id = '${dishId}'`,
-    (error, results) => {
-      if (error) {
+async function getDishById (dishId) {
+    try {
+        const results = await pool.query(`SELECT * FROM dishes WHERE id = '${dishId}'`)
+        return results.rows[0]
+    } catch (error) {
         throw error
-      }
-      response.status(200).json(results.rows)
     }
-  )
+  
 }
 
 const addDish = async (request, response) => {
@@ -111,7 +107,7 @@ async function _checkIfInDB(title) {
 }
 
 module.exports = {
-  getDishes,
+  query,
   getDishById,
   addDish,
   updateDish,

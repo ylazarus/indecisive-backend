@@ -24,15 +24,9 @@ if (process.env.NODE_ENV === 'production') {
   app.use(cors(corsOptions))
 }
 
-const db = require ('./services/dishService')
+const dishRoutes = require('./api/dish/dish.routes')
 
-
-
-app.get('/api/dish', db.getDishes)
-app.get('/api/dish/:id', db.getDishById)
-app.post('/api/dish', db.addDish)
-app.put('/api/dish/:id', db.updateDish)
-app.delete('/api/dish/:id', db.removeDish)
+app.use('/api/dish', dishRoutes)
 
 app.get('/**', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
