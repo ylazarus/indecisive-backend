@@ -30,8 +30,7 @@ async function query(filterBy) {
 async function getDishById (dishId) {
     try {
         const results = await pool.query(`SELECT * FROM dishes WHERE id = '${dishId}'`)
-        console.log(results.rows[0]);
-        return results.rows[0]
+        return results.rows
     } catch (error) {
         throw error
     }
