@@ -12,7 +12,6 @@ async function getDishes(request, response) {
 
 async function getDishById(request, response) {
     let dishId = request.params.id
-    console.log('dish id is: ', dishId);
     try {
         const dish = await dishService.getDishById(dishId)
         response.status(200).json(dish)
@@ -21,11 +20,43 @@ async function getDishById(request, response) {
     }
 }
 
+async function addDish(request, response) {
+    try {
+        const dish = request.body
+        await dishService.addDish(dish)
+        response.status(201).send('dish added successfully')
+    } catch (error) {
+        response.status(500).send("Dish with that title already exists!")
+    } 
+}
+
+async function updateDish(request, response) {
+    const dishId = request.params.id
+    const dish = request.body
+    try {
+        await dishService.updateDish(dishId, dish)
+        response.status(201).send('dish updated successfully')
+    } catch (error) {
+        console.log('failed to update', error);
+        response.status(500).send('can not update dish now')
+    }
+}
+
+async function removeDish(request, response) {
+    try {
+        const dishId = request.params.id
+        await dishService.removeDish(dishId)
+        response.status(201).send('dish deleted successfully')
+    } catch (error) {
+        response.status(500).send('can not delete dish now')
+    }
+}
+
 module.exports = {
     getDishes,
     getDishById,
-    // addDish,
-    // updateDish,
-    // removeDish,
+    addDish,
+    updateDish,
+    removeDish,
   }
 

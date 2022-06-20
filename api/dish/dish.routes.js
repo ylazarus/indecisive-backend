@@ -11,8 +11,8 @@ const {
 
 router.get('/', getDishes)
 router.get('/:id', getDishById)
-// router.post('/', addDish)
-// router.put('/:id', updateDish)
-// router.delete('/:id', removeDish)
+router.post('/', addDish)
+router.put('/:id', updateDish)
+router.delete('/:id', removeDish)
 
 module.exports = router

@@ -30,6 +30,7 @@ async function query(filterBy) {
 async function getDishById (dishId) {
     try {
         const results = await pool.query(`SELECT * FROM dishes WHERE id = '${dishId}'`)
+        console.log(results.rows[0]);
         return results.rows[0]
     } catch (error) {
         throw error
@@ -37,53 +38,41 @@ async function getDishById (dishId) {
   
 }
 
-const addDish = async (request, response) => {
-  const { title, type, onePot, kosherStatus, difficult, quick, time, link } =
-    request.body
+async function addDish (dish) {
+  const { title, type, onePot, kosherStatus, difficult, quick, time, link } = dish
   let alreadyInDB = 1
   alreadyInDB = await _checkIfInDB(title)
   if (alreadyInDB) {
-    response.status(500).send("Dish with that title already exists!")
-    return
+    console.log('already in DB');
+    throw error
   }
-  pool.query(
-    `INSERT INTO dishes (id, title, type, one_pot, kosher_status, difficult, quick, time, link)
-     VALUES (uuid_generate_v4(), '${title}', '${type}', ${onePot}, '${kosherStatus}', ${difficult}, ${quick}, ${time}, '${link}')`,
-    (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(201).send(`dish added successfully`)
-    }
-  )
+  try {
+    await pool.query(
+        `INSERT INTO dishes (id, title, type, one_pot, kosher_status, difficult, quick, time, link)
+         VALUES (uuid_generate_v4(), '${title}', '${type}', ${onePot}, '${kosherStatus}', ${difficult}, ${quick}, ${time}, '${link}')`)
+  } catch (error) {
+    throw error
+  }
 }
 
-const updateDish = (request, response) => {
-  const dishId = request.params.id
-  const { title, type, onePot, kosherStatus, difficult, quick, time, link } =
-    request.body
-  pool.query(
-    `UPDATE dishes SET title = '${title}', type = '${type}', one_pot = ${onePot}, 
-              kosher_status = '${kosherStatus}', difficult = ${difficult}, quick = ${quick},
-              time = ${time}, link = '${link}' WHERE id = '${dishId}'`,
-    (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).send(`dish updated successfully`)
-    }
-  )
+async function updateDish (dishId, dish){
+  const {title, type, one_pot, kosher_status, difficult, quick, time, link } = dish
+  try {
+    await pool.query(
+        `UPDATE dishes SET title = '${title}', type = '${type}', one_pot = ${one_pot}, 
+                  kosher_status = '${kosher_status}', difficult = ${difficult}, quick = ${quick},
+                  time = ${time}, link = '${link}' WHERE id = '${dishId}'`)
+  } catch (error) {
+    throw error
+  }
 }
 
-const removeDish = (request, response) => {
-  const dishId = request.params.id
-  pool.query(`DELETE FROM dishes WHERE id = '${dishId}'`, (error, results) => {
-    if (error) {
-      throw error
+async function removeDish(dishId) {
+    try {
+        pool.query(`DELETE FROM dishes WHERE id = '${dishId}'`)
+    } catch (error) {
+        throw error
     }
-    console.log(results)
-    response.status(200).send("dish deleted successfully")
-  })
 }
 
 function _buildSQLquery(filterBy) {
