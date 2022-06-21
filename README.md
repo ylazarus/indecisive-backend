@@ -1,6 +1,6 @@
 # indecisive-backend
 
-My latest project I'm currently building using PostgreSQL and Node.JS to manage the backend.
+My latest project, hosted on AWS EC2 on a Ubuntu VM with Nginx using PostgreSQL and Node.JS.
 
 The app is for those who can't decide what to cook, you put in minimal search terms and the app suggests up to three dishes for you to make.
 
