@@ -4,11 +4,11 @@ const { response } = require("express")
 
 const Pool = require("pg").Pool
 const pool = new Pool({
-  user: "me",
-  host: "localhost",
-  database: "dish",
-  password: "password",
-  port: 5432,
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
 })
 
 pool.connect((err) => {
@@ -30,7 +30,7 @@ async function query(filterBy) {
 async function getDishById (dishId) {
     try {
         const results = await pool.query(`SELECT * FROM dishes WHERE id = '${dishId}'`)
-        return results.rows
+        return results.rows // returns an array with length of 1, handled in frontend
     } catch (error) {
         throw error
     }
