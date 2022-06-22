@@ -1,20 +1,8 @@
 // uses postgreSQL as DB
 
 const { response } = require("express")
+const pool = require('../../services/db.service')
 
-const Pool = require("pg").Pool
-const pool = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-})
-
-pool.connect((err) => {
-  if (err) throw new Error("postgreSQL failed connection")
-  console.log("connected to postgreSQL")
-})
 
 async function query(filterBy) {
   // this app purposely returns a maximum of three results

@@ -26,8 +26,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const dishRoutes = require('./api/dish/dish.routes')
+const userRoutes = require('./api/auth/auth.routes')
 
 app.use('/api/dish', dishRoutes)
+app.use('/api/user', userRoutes)
 
 app.get('/**', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
