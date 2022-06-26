@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const {requireAuth, requireAdmin} = require('../../middlewares/requireAuth.middleware')
+
 
 const {
     getDishes,
@@ -12,7 +14,7 @@ const {
 router.get('/', getDishes)
 router.get('/:id', getDishById)
 router.post('/', addDish)
-router.put('/:id', updateDish)
-router.delete('/:id', removeDish)
+router.put('/:id', requireAuth, updateDish)
+router.delete('/:id', requireAuth, requireAdmin, removeDish)
 
 module.exports = router
