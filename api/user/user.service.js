@@ -1,126 +1,133 @@
-
-const dbService = require('../../services/db.service')
+const pool = require("../../services/db.service")
+const bcrypt = require('bcrypt')
 // const logger = require('../../services/logger.service')
 
 module.exports = {
-    query,
-    getById,
-    getByUsername,
-    remove,
-    update,
-    add
+  getUsers,
+  getById,
+  getByUsername,
+  remove,
+  update,
+  add,
 }
 
-async function query(filterBy = {}) {
-    const criteria = _buildCriteria(filterBy)
-    try {
-        const collection = await dbService.getCollection('user')
-        var users = await collection.find(criteria).toArray()
-        users = users.map(user => {
-            delete user.password
-            user.createdAt = ObjectId(user._id).getTimestamp()
-            // Returning fake fresh data
-            // user.createdAt = Date.now() - (1000 * 60 * 60 * 24 * 3) // 3 days ago
-            return user
-        })
-        return users
-    } catch (err) {
-        logger.error('cannot find users', err)
-        throw err
-    }
+// addUserTable()
+
+// async function addUserTable() {
+//     try {
+//         await pool.query(`CREATE TABLE users (
+//             id UUID PRIMARY KEY,
+//             username VARCHAR(50) UNIQUE NOT NULL,
+//             password VARCHAR(100) NOT NULL,
+//             fullname VARCHAR(50) NOT NULL,
+//             is_admin BOOL
+//         )`)
+
+//     } catch (error) {
+//        console.log('error adding table', error)
+//     }
+// }
+
+async function getUsers() {
+  try {
+    const results = await pool.query("SELECT * FROM users")
+    let users = results.rows
+    users = users.map((user) => {
+      delete user.password
+      return user
+    })
+    return users
+  } catch (err) {
+    logger.error("cannot find users", err)
+    throw err
+  }
 }
 
 async function getById(userId) {
-    try {
-        // const collection = await dbService.getCollection('user')
-        // const user = await collection.findOne({ _id: ObjectId(userId) })
-        delete user.password
-
-        return user
-    } catch (err) {
-        logger.error(`while finding user ${userId}`, err)
-        throw err
-    }
+  try {
+    const results = await pool.query(
+      `SELECT * FROM users WHERE id = '${userId}'`
+    )
+    let users = results.rows
+    users = users.map((user) => {
+      delete user.password
+      return user
+    })
+    return users // returns array length of 1
+  } catch (err) {
+    logger.error(`while finding user ${userId}`, err)
+    throw err
+  }
 }
 async function getByUsername(username) {
-    try {
-        // const collection = await dbService.getCollection('user')
-        // const user = await collection.findOne({ username })
-        return user
-    } catch (err) {
-        logger.error(`while finding user ${username}`, err)
-        throw err
-    }
+  try {
+    const results = await pool.query(
+      `SELECT * FROM users WHERE username = '${username}'`
+    )
+    const users = results.rows
+    return users[0]
+  } catch (err) {
+    logger.error(`while finding user ${username}`, err)
+    throw err
+  }
 }
 
 async function remove(userId) {
-    try {
-        // const collection = await dbService.getCollection('user')
-        // await collection.deleteOne({ '_id': ObjectId(userId) })
-    } catch (err) {
-        logger.error(`cannot remove user ${userId}`, err)
-        throw err
-    }
+  try {
+    pool.query(`DELETE FROM users WHERE id = '${userId}'`)
+  } catch (err) {
+    logger.error(`cannot remove user ${userId}`, err)
+    throw err
+  }
 }
 
-async function update(user) {
-    try {
-        // peek only updatable fields!
-        // const userToSave = {
-        //     _id: ObjectId(user._id), // needed for the returnd obj
-        //     username: user.username,
-        //     fullname: user.fullname,
-        //     // img: user.img, // if we want to be able to add user images (perhaps even from webcam)
-        // }
-        // const collection = await dbService.getCollection('user')
-        // await collection.updateOne({ _id: userToSave._id }, { $set: userToSave })
-        return userToSave;
-    } catch (err) {
-        logger.error(`cannot update user ${user._id}`, err)
-        throw err
-    }
+async function update(user, id) {
+  console.log("updating user", user)
+  const { username, isAdmin, fullname,  } = user
+
+  if (!username || !fullname)
+    return Promise.reject("fullname and username are required!")
+
+  try {
+    const userToSave = await pool.query(
+      `UPDATE users SET username = '${username}', fullname = '${fullname}', is_admin = ${isAdmin} WHERE id = '${id}'`
+    )
+    console.log('saved successfully', userToSave);
+    return userToSave
+  } catch (err) {
+    console.log(`cannot update user `, err)
+    throw err
+  }
 }
 
 async function add(user) {
-    try {
-        // peek only updatable fields!
-        // const userToAdd = {
-        //     username: user.username,
-        //     password: user.password,
-        //     fullname: user.fullname,
-        //     imgUrl: user?.imgUrl || '',
-        //     mentions: []
-        //     // img: user.img, // if we want to be able to add user images (perhaps even from webcam)
-
-        // }
-        // const collection = await dbService.getCollection('user')
-        // await collection.insertOne(userToAdd)
-        return userToAdd
-    } catch (err) {
-        logger.error('cannot insert user', err)
-        throw err
-    }
+  const { username, password, fullname } = user
+  try {
+    const userToAdd = await pool.query(
+      `INSERT INTO users (id, username, password, fullname, is_admin)
+        VALUES (uuid_generate_v4(), '${username}', '${password}', '${fullname}', false)`
+    )
+    return userToAdd
+  } catch (err) {
+    // logger.error("cannot insert user", err).
+    throw err
+  }
 }
 
-function _buildCriteria(filterBy) {
-    const criteria = {}
-    if (filterBy.txt) {
-        const txtCriteria = { $regex: filterBy.txt, $options: 'i' }
-        criteria.$or = [
-            {
-                username: txtCriteria
-            },
-            {
-                fullname: txtCriteria
-            }
-        ]
-    }
-    if (filterBy.minBalance) {
-        criteria.score = { $gte: filterBy.minBalance }
-    }
-    return criteria
-}
-
-
-
-
+// function _buildJoinQuery(filterBy) { // this is not ready yet, need to update later
+//   let query = (filterBy.createdById) ? // may need to update
+//   `SELECT * FROM dishes WHERE created_by_id = '${createdById}' ORDER BY title ASC` :
+//   `SELECT * FROM dishes ORDER BY title ASC`
+//   if (filterBy.userId) {
+//     const txtCriteria = { $regex: filterBy.txt, $options: "i" }
+//     query.$or = [
+//       {
+//         username: txtCriteria,
+//       },
+//       {
+//         fullname: txtCriteria,
+//       },
+//     ]
+//   }
+//   return query
+// }
