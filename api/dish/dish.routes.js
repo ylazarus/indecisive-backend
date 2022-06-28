@@ -13,7 +13,7 @@ const {
 
 router.get('/', getDishes)
 router.get('/:id', getDishById)
-router.post('/', addDish)
+router.post('/', requireAuth, addDish)
 router.put('/:id', requireAuth, updateDish)
 router.delete('/:id', requireAuth, requireAdmin, removeDish)
 

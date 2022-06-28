@@ -103,11 +103,11 @@ async function update(user, id) {
 async function add(user) {
   const { username, password, fullname } = user
   try {
-    const userToAdd = await pool.query(
+    const results = await pool.query(
       `INSERT INTO users (id, username, password, fullname, is_admin)
-        VALUES (uuid_generate_v4(), '${username}', '${password}', '${fullname}', false)`
+        VALUES (uuid_generate_v4(), '${username}', '${password}', '${fullname}', false) RETURNING *`
     )
-    return userToAdd
+    return results.rows[0]
   } catch (err) {
     // logger.error("cannot insert user", err).
     throw err

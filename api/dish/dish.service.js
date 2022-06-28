@@ -26,7 +26,7 @@ async function getDishById (dishId) {
 }
 
 async function addDish (dish) {
-  const { title, type, onePot, kosherStatus, difficult, quick, time, link } = dish
+  const { title, type, onePot, kosherStatus, difficult, quick, time, link, addedById } = dish
   let alreadyInDB = 1
   alreadyInDB = await _checkIfInDB(title)
   if (alreadyInDB) {
@@ -35,20 +35,20 @@ async function addDish (dish) {
   }
   try {
     await pool.query(
-        `INSERT INTO dishes (id, title, type, one_pot, kosher_status, difficult, quick, time, link)
-         VALUES (uuid_generate_v4(), '${title}', '${type}', ${onePot}, '${kosherStatus}', ${difficult}, ${quick}, ${time}, '${link}')`)
+        `INSERT INTO dishes (id, title, type, one_pot, kosher_status, difficult, quick, time, link, added_by_id)
+         VALUES (uuid_generate_v4(), '${title}', '${type}', ${onePot}, '${kosherStatus}', ${difficult}, ${quick}, ${time}, '${link}', '${addedById}')`)
   } catch (error) {
     throw error
   }
 }
 
 async function updateDish (dishId, dish){
-  const {title, type, one_pot, kosher_status, difficult, quick, time, link } = dish
+  const {title, type, one_pot, kosher_status, difficult, quick, time, link, addedById } = dish
   try {
     await pool.query(
         `UPDATE dishes SET title = '${title}', type = '${type}', one_pot = ${one_pot}, 
                   kosher_status = '${kosher_status}', difficult = ${difficult}, quick = ${quick},
-                  time = ${time}, link = '${link}' WHERE id = '${dishId}'`)
+                  time = ${time}, link = '${link}', added_by_id = '${addedById}' WHERE id = '${dishId}'`)
   } catch (error) {
     throw error
   }
