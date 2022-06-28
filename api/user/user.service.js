@@ -102,6 +102,7 @@ async function update(user, id) {
 
 async function add(user) {
   const { username, password, fullname } = user
+  console.log('trying to add user ', user);
   try {
     const results = await pool.query(
       `INSERT INTO users (id, username, password, fullname, is_admin)
@@ -109,6 +110,7 @@ async function add(user) {
     )
     return results.rows[0]
   } catch (err) {
+    console.log('error adding user', err);
     // logger.error("cannot insert user", err).
     throw err
   }
