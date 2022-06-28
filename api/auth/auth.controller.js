@@ -17,12 +17,12 @@ async function signup(req, res) {
         // Never log passwords
         const account = await authService.signup(username, password, fullname)
 
-        // logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
+        logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
         const user = await authService.login(username, password)
         req.session.user = user
         res.json(user)
     } catch (err) {
-        // logger.error('Failed to signup ' + err)
+        logger.error('Failed to signup ' + err)
         res.status(500).send({ err: 'Failed to signup' })
     }
 }

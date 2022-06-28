@@ -1,6 +1,6 @@
 const pool = require("../../services/db.service")
 const bcrypt = require('bcrypt')
-// const logger = require('../../services/logger.service')
+const logger = require('../../services/logger.service')
 
 module.exports = {
   getUsers,
@@ -95,7 +95,7 @@ async function update(user, id) {
     console.log('saved successfully', userToSave);
     return userToSave
   } catch (err) {
-    console.log(`cannot update user `, err)
+    logger.error(`cannot update user ${user} `, err)
     throw err
   }
 }
@@ -110,8 +110,7 @@ async function add(user) {
     )
     return results.rows[0]
   } catch (err) {
-    console.log('error adding user', err);
-    // logger.error("cannot insert user", err).
+    logger.error(`cannot insert user ${user} `, err)    
     throw err
   }
 }
