@@ -28,8 +28,8 @@ if (process.env.NODE_ENV === 'production') {
   app.use(cors(corsOptions))
 }
 
-const dishRoutes = require('./api/dish/dish.routes')
 const userRoutes = require('./api/user/user.routes')
+const dishRoutes = require('./api/dish/dish.routes')
 const authRoutes = require('./api/auth/auth.routes')
 
 app.use('/api/dish', dishRoutes)
