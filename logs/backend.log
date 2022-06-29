@@ -6,3 +6,12 @@
 6/29/2022, 10:03:34 AM - INFO - connected to postgreSQL 
 6/29/2022, 1:33:28 PM - INFO - connected to postgreSQL 
 6/29/2022, 1:53:16 PM - INFO - connected to postgreSQL 
+6/29/2022, 3:07:19 PM - INFO - connected to postgreSQL 
+6/29/2022, 9:15:21 PM - INFO - connected to postgreSQL 
+6/29/2022, 9:58:19 PM - INFO - connected to postgreSQL 
+6/29/2022, 9:58:45 PM - INFO - connected to postgreSQL 
+6/29/2022, 9:59:45 PM - INFO - connected to postgreSQL 
+6/29/2022, 9:59:57 PM - INFO - getting dishes 
+6/29/2022, 10:00:29 PM - INFO - signup attempting for  
+6/29/2022, 10:00:29 PM - DEBUG - auth.service - login with username:  
+6/29/2022, 10:00:30 PM - ERROR - Failed to sign in Invalid username or password 

@@ -1,4 +1,5 @@
 const dishService = require('./dish.service')
+const logger = require('../../services/logger.service')
 
 async function getDishes(request, response) {
     logger.info(`getting dishes`)
