@@ -1,3 +1,5 @@
+const logger = require('./logger.service')
+
 const Pool = require("pg").Pool
 const pool = new Pool({
   user: process.env.PGUSER,
@@ -9,7 +11,7 @@ const pool = new Pool({
 
 pool.connect((err) => {
   if (err) throw new Error("postgreSQL failed connection")
-  console.log("connected to postgreSQL")
+  logger.info(`connected to postgreSQL`)
 })
 
 module.exports = {

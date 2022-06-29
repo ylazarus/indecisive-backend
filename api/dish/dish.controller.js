@@ -1,6 +1,7 @@
 const dishService = require('./dish.service')
 
 async function getDishes(request, response) {
+    logger.info(`getting dishes`)
     try {
         let filterBy = request.query
         const dishes = await dishService.query(filterBy)
