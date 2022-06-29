@@ -32,8 +32,8 @@ const userRoutes = require('./api/user/user.routes')
 const dishRoutes = require('./api/dish/dish.routes')
 const authRoutes = require('./api/auth/auth.routes')
 
-app.use('/api/dish', dishRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/dish', dishRoutes)
 app.use('/api/auth', authRoutes)
 
 app.get('/**', (req, res) => {
