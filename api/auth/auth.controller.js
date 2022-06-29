@@ -3,19 +3,22 @@ const logger = require('../../services/logger.service')
 
 async function login(req, res) {
     const { username, password } = req.body
+    logger.info(`signup attempting for ${username}`)
+
     try {
         const user = await authService.login(username, password)
         req.session.user = user
         res.json(user)
     } catch (err) {
+        logger.error('Failed to sign in ' + err)
         res.status(401).send({ err: 'Failed to Login' })
     }
 }
 
 async function signup(req, res) {
+    const { username, password, fullname } = req.body
+    logger.info(`attempting signin for ${username}`)
     try {
-        const { username, password, fullname } = req.body
-        logger.info(`signup attempted for ${username}`)
         // Never log passwords
         const account = await authService.signup(username, password, fullname)
 

@@ -1,1 +1,4 @@
 6/28/2022, 2:54:34 PM - ERROR - Failed to signup Username already taken 
+6/28/2022, 4:55:16 PM - DEBUG - auth.service - login with username: Yoni 
+6/29/2022, 9:42:50 AM - INFO - signup attempted for Yoni 
+6/29/2022, 9:42:50 AM - DEBUG - auth.service - login with username: Yoni 
