@@ -15,3 +15,9 @@
 6/29/2022, 10:00:29 PM - INFO - signup attempting for  
 6/29/2022, 10:00:29 PM - DEBUG - auth.service - login with username:  
 6/29/2022, 10:00:30 PM - ERROR - Failed to sign in Invalid username or password 
+6/30/2022, 8:49:11 AM - INFO - connected to postgreSQL 
+6/30/2022, 8:49:48 AM - INFO - connected to postgreSQL 
+6/30/2022, 8:50:18 AM - INFO - connected to postgreSQL 
+6/30/2022, 8:50:41 AM - INFO - connected to postgreSQL 
+6/30/2022, 8:51:01 AM - INFO - connected to postgreSQL 
+6/30/2022, 8:51:15 AM - INFO - connected to postgreSQL 

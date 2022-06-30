@@ -40,7 +40,6 @@ async function updateUser(req, res) {
         res.send(savedUser)
     } catch (err) {
         logger.error('Failed to update user', err)
-        console.log(err, 'error from contruller');
         res.status(500).send({ err: 'Failed to update user' })
     }
 }

@@ -1,5 +1,4 @@
 const pool = require("../../services/db.service")
-const bcrypt = require('bcrypt')
 const logger = require('../../services/logger.service')
 
 module.exports = {
@@ -10,23 +9,6 @@ module.exports = {
   update,
   add,
 }
-
-// addUserTable()
-
-// async function addUserTable() {
-//     try {
-//         await pool.query(`CREATE TABLE users (
-//             id UUID PRIMARY KEY,
-//             username VARCHAR(50) UNIQUE NOT NULL,
-//             password VARCHAR(100) NOT NULL,
-//             fullname VARCHAR(50) NOT NULL,
-//             is_admin BOOL
-//         )`)
-
-//     } catch (error) {
-//        console.log('error adding table', error)
-//     }
-// }
 
 async function getUsers() {
   try {
