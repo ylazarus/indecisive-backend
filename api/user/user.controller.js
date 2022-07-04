@@ -22,6 +22,17 @@ async function getUser(req, res) {
     }
 }
 
+async function getDishesByUser(req, res) {
+    try {
+        const dishesByUser = await userService.getDishesByUserId(req.params.id)
+        res.send(dishesByUser)
+        
+    } catch (error) {
+        logger.error('Failed to get dishes by user', error)
+        res.status(500).send({ err: 'Failed to get user' })
+    }
+}
+
 async function deleteUser(req, res) {
     try {
         await userService.remove(req.params.id)
@@ -47,6 +58,7 @@ async function updateUser(req, res) {
 module.exports = {
     getUser,
     getUsers,
+    getDishesByUser,
     deleteUser,
     updateUser
 }

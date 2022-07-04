@@ -21,3 +21,41 @@
 6/30/2022, 8:50:41 AM - INFO - connected to postgreSQL 
 6/30/2022, 8:51:01 AM - INFO - connected to postgreSQL 
 6/30/2022, 8:51:15 AM - INFO - connected to postgreSQL 
+7/3/2022, 10:32:55 AM - INFO - connected to postgreSQL 
+7/3/2022, 11:21:05 AM - ERROR - Failed to sign in Invalid username or password 
+7/4/2022, 9:29:42 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:45:34 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:45:58 AM - ERROR - while finding dish by user id 55b7a0b5-1390-4f11-81ca-0a08080b491f | error: syntax error at or near "WHERE" 
+7/4/2022, 9:49:01 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:49:16 AM - ERROR - while finding dish by user id 55b7a0b5-1390-4f11-81ca-0a08080b491f | error: column reference "id" is ambiguous 
+7/4/2022, 9:49:56 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:50:08 AM - ERROR - while finding dish by user id 55b7a0b5-1390-4f11-81ca-0a08080b491f | error: column reference "id" is ambiguous 
+7/4/2022, 9:54:15 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:55:02 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:56:31 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:58:07 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:58:23 AM - ERROR - while finding dish by user id ee6f5c85-b669-414d-bb99-68ca0477fd07 | error: syntax error at or near "d" 
+7/4/2022, 9:58:46 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:59:37 AM - INFO - connected to postgreSQL 
+7/4/2022, 9:59:55 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:01:28 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:01:47 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:01:54 AM - ERROR - while finding dish by user id ee6f5c85-b669-414d-bb99-68ca0477fd07 | error: column "meat" does not exist 
+7/4/2022, 10:02:17 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:09:00 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:10:05 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:10:16 AM - ERROR - Failed to get dishes by user | ReferenceError: id is not defined 
+7/4/2022, 10:11:55 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:12:10 AM - ERROR - Failed to get dishes by user | ReferenceError: id is not defined 
+7/4/2022, 10:12:31 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:12:42 AM - ERROR - while finding dish by user id ee6f5c85-b669-414d-bb99-68ca0477fd07 | error: syntax error at or near "d" 
+7/4/2022, 10:13:01 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:13:40 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:14:14 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:17:03 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:22:58 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:23:32 AM - ERROR - while finding dish by user id ee6f5c85-b669-414d-bb99-68ca0477fd07 | error: invalid reference to FROM-clause entry for table "users" 
+7/4/2022, 10:25:31 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:26:20 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:29:30 AM - INFO - connected to postgreSQL 
+7/4/2022, 10:35:42 AM - INFO - connected to postgreSQL 

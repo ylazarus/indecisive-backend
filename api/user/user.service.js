@@ -1,9 +1,10 @@
 const pool = require("../../services/db.service")
-const logger = require('../../services/logger.service')
+const logger = require("../../services/logger.service")
 
 module.exports = {
   getUsers,
   getById,
+  getDishesByUserId,
   getByUsername,
   remove,
   update,
@@ -41,6 +42,21 @@ async function getById(userId) {
     throw err
   }
 }
+
+async function getDishesByUserId(userId) {
+  try {
+    const results = await pool.query(
+      `SELECT b.title, b.kosher_status, b.id as dish_id, a.fullname AS added_by, a.id as user_id
+      FROM users a LEFT OUTER JOIN dishes b
+      ON a.id = b.added_by_id
+      WHERE a.id = '${userId}'`
+    )
+    return results.rows
+  } catch (error) {
+    logger.error(`while finding dish by user id ${userId}`, error)
+  }
+}
+
 async function getByUsername(username) {
   try {
     const results = await pool.query(
@@ -64,8 +80,7 @@ async function remove(userId) {
 }
 
 async function update(user, id) {
-  console.log("updating user", user)
-  const { username, isAdmin, fullname,  } = user
+  const { username, isAdmin, fullname } = user
 
   if (!username || !fullname)
     return Promise.reject("fullname and username are required!")
@@ -74,7 +89,7 @@ async function update(user, id) {
     const userToSave = await pool.query(
       `UPDATE users SET username = '${username}', fullname = '${fullname}', is_admin = ${isAdmin} WHERE id = '${id}'`
     )
-    console.log('saved successfully', userToSave);
+    console.log("saved successfully", userToSave)
     return userToSave
   } catch (err) {
     logger.error(`cannot update user ${user} `, err)
@@ -84,7 +99,7 @@ async function update(user, id) {
 
 async function add(user) {
   const { username, password, fullname } = user
-  console.log('trying to add user ', user);
+  console.log("trying to add user ", user)
   try {
     const results = await pool.query(
       `INSERT INTO users (id, username, password, fullname, is_admin)
@@ -92,7 +107,7 @@ async function add(user) {
     )
     return results.rows[0]
   } catch (err) {
-    logger.error(`cannot insert user ${user} `, err)    
+    logger.error(`cannot insert user ${user} `, err)
     throw err
   }
 }
